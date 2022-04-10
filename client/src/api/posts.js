@@ -11,3 +11,6 @@ export const deletePostRequest = async id =>
 
 export const getPostRequest  = async id => 
   await axios.get('/posts/' + id)
+
+export const updatePostRequest  = async (id, newFields) => 
+  await axios.put('/posts/' + id, newFields )

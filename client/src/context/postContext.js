@@ -1,9 +1,11 @@
 import { useState, useContext, createContext, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import {
   createPostRequest,
   deletePostRequest,
   getPostRequest,
   getPostsRequests,
+  updatePostRequest
 } from "../api/posts";
 
 const postContext = createContext();
@@ -22,10 +24,7 @@ export const PostProvider = ({ children }) => {
     const res = await getPostsRequests();
     setPosts(res.data);
   };
-  useEffect(() => {
-    getPosts();
-  }, []);
-
+  
   ///////////
   const createPost = async (post) => {
     const res = await createPostRequest(post);
@@ -39,13 +38,22 @@ export const PostProvider = ({ children }) => {
       setPosts(posts.filter((post) => post._id !== id));
     }
   };
-
+  
   ///////////
   const getPost = async (id) => {
     const res = await getPostRequest(id);
     return res.data;
   };
+  const updatePost = async (id, post)=>{
+   const res =  await updatePostRequest(id,post)
+    setPosts(posts.map(post=>post._id === id ? res.data : post))
+  }
 
+  
+  useEffect(() => {
+    getPosts();
+  }, []); 
+  
   return (
     <postContext.Provider
       value={{
@@ -54,6 +62,7 @@ export const PostProvider = ({ children }) => {
         createPost,
         deletePost,
         getPost,
+        updatePost
       }}
     >
       {children}
