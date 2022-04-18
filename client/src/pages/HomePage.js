@@ -10,8 +10,9 @@ export function HomePage() {
   if (posts.length === 0)
     return (
       <div className="flex flex-col justify-center items-center">
-        <VscEmptyWindow className='w-48 h-48 text-white' />
-        <h1 className='text-white'>No have posts</h1>
+        <VscEmptyWindow className='w-48 h-48 text-blue-600' />
+        <h1 className='text-blue-700'>No have posts</h1>
+        <Link to='/new' className='text-white py-3'>Create a new Post</Link>
       </div>
     );
 
